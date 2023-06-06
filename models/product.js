@@ -10,7 +10,7 @@ class Product {
 
     this.imageUrl = imageUrl;
 
-    this._id=id
+    this._id=new mongodb.ObjectId(id)
   }
 
   save() {
@@ -18,7 +18,7 @@ class Product {
     let dbop
     if(this._id){ 
       //update product
-      dbop=db.collection('products').updateOne({_id: new mongodb.ObjectId(this._id)},{$set:this})
+      dbop=db.collection('products').updateOne({_id: this._id},{$set:this})
 
     }else{
 dbop=db.collection('products')
