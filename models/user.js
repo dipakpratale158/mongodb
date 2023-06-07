@@ -104,7 +104,7 @@ class User{
           );
       });
   }
-
+//////////////////////////////
   getOrders() {
     const db = getDb();
     return db
