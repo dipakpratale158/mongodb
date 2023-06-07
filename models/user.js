@@ -5,7 +5,10 @@ class User{
   constructor(username,email,cart,id){
 this.name=username,
 this.email=email,
-this.cart=cart//item:[]
+// this.cart=cart//item:[]
+this.cart = {
+  items: [] // Initialize as an empty array
+};
 this._id=id
   }
   save(){
@@ -17,11 +20,27 @@ return db.collection('users')
   }
 
 addToCart(product){
-// const cartProduct = this.cart.items.findIndex(cp=>{
-//   return cp._id===product._id
-// })
+const cartProductIndex = this.cart.items.findIndex(cp=>{
+  return cp.productId===product._id.toString()
+  ///or  return cp._id==product._id
 
-const updateCart={items:({...product,quantity:1})}
+})
+let newQuantity=1
+const updatedcartItem=[...this.cart.items]
+
+if(cartProductIndex>=0){
+newQuantity=this.cart.item[cartProductIndex].quantity+1
+updatedcartItem[cartProductIndex].quantity=newQuantity
+
+}else{
+  updatedcartItem.push({productId:new ObjectId(product._id),quantity:newQuantity})
+}
+
+const updateCart={
+  // items:({...product,quantity:1})}
+  // item:[{productId:new ObjectId(product._id),quantity:1}]
+  item:updatedcartItem
+}
 const db=getDb()
 return db.collection('users')
 .updateOne({_id:new ObjectId(this._id)},
