@@ -51,23 +51,41 @@ exports.getIndex = (req, res, next) => {
     });
 };
 
+// exports.getCart = (req, res, next) => {
+//   req.user
+//     .getCart()
+//     .then(cart => {
+//       return cart
+//         .getProducts()
+//         .then(products => {
+//           res.render('shop/cart', {
+//             path: '/cart',
+//             pageTitle: 'Your Cart',
+//             products: products
+//           });
+//         })
+//         .catch(err => console.log(err));
+//     })
+//     .catch(err => console.log(err));
+// };
+
+
 exports.getCart = (req, res, next) => {
   req.user
     .getCart()
-    .then(cart => {
-      return cart
-        .getProducts()
-        .then(products => {
+    .then(products => {
+      
+        
           res.render('shop/cart', {
             path: '/cart',
             pageTitle: 'Your Cart',
             products: products
-          });
-        })
-        .catch(err => console.log(err));
+          })
+    
     })
     .catch(err => console.log(err));
 };
+
 
 exports.postCart = (req, res, next) => {
   const prodId = req.body.productId;
