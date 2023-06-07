@@ -10,7 +10,7 @@ class Product {
 
     this.imageUrl = imageUrl;
 
-    this._id=new mongodb.ObjectId(id)
+    this._id=id ?new mongodb.ObjectId(id):null
   }
 
   save() {
