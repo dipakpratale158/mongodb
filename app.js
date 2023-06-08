@@ -103,6 +103,20 @@ app.use(
     store: store
   })
 );
+///find user is database
+///i am satoreing mongoes so go shop and replase req.user
+app.use((req,res,next)=>{
+  if(!req.session.user){
+    return next()
+  }
+  //after this not exicuted
+  User.findById(req.session.user._id)
+  .then(user => {
+    req.user=user
+ next()
+  })
+  .catch(err => console.log(err));
+})
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
